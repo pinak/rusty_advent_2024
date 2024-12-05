@@ -29,11 +29,7 @@ fn distance(a: &Vec<i64>, b: &Vec<i64>) -> i64 {
 fn similarity_score(a: &Vec<i64>, b: &Vec<i64>) -> i64 {
     let mut b_freq_map: HashMap<i64, i64> = HashMap::new();
     for n in b {
-        if b_freq_map.contains_key(n) {
-            b_freq_map.insert(*n, b_freq_map[n] + 1);
-        } else {
-            b_freq_map.insert(*n, 1);
-        }
+       b_freq_map.insert(*n, 1 + b_freq_map.get(n).unwrap_or(&0));
     }
     a.iter().fold(0, |acc: i64, n| {
         acc + (n * b_freq_map.get(n).unwrap_or(&0))
